@@ -1,4 +1,4 @@
-# O-RAN Load balancing app
+# UMA SOLUÇÃO PARA REDES AUTO-ORGANIZADAS BASEADAS EM INTENÇÕES
 This repository contains the O-RAN Load balancing app. This application takes in intents at the SMO level and delivers policies to the RAN to self-organize the network.
 
 ## Organization
