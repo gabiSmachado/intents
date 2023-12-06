@@ -17,7 +17,7 @@ Mariadb: https://www.digitalocean.com/community/tutorials/how-to-install-mariadb
 
 Apache Kafka: https://kafka.apache.org/quickstart;
 
-Instalação do near-RT RIC: https://github.com/gabiSmachado/Near-RT-RIC_deploy;
+Near-RT RIC: https://github.com/gabiSmachado/Near-RT-RIC_deploy;
 
 ## Execução
 
