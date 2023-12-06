@@ -1,5 +1,6 @@
 # UMA SOLUÇÃO PARA REDES AUTO-ORGANIZADAS BASEADAS EM INTENÇÕES
-Este trabalho tem o objetivo de criar redes 5g auto-organização da rede através de Intents, desenvolvido em cima da arquitetura da rede disponível pela O-RAN Alliance em https://docs.o-ran-sc.org/en/latest/architecture/architecture.html.
+Este trabalho tem o objetivo de criar redes 5g auto-organização da rede através de Intents, 
+desenvolvido em cima da arquitetura da rede disponível pela O-RAN Alliance em https://docs.o-ran-sc.org/en/latest/architecture/architecture.html.
 
 ## Arquitetura
 
