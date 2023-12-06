@@ -18,29 +18,6 @@ func CurrentId(db *sql.DB) (int, error) {
 	return id, nil
 }
 
-func createTable(db *sql.DB) error {
-	_, err := db.Exec(`CREATE TABLE IF NOT EXISTS intents (
-		id int primary key AUTO_INCREMENT,
-		name varchar(255),
-		label varchar(255),
-		day_of_the_week varchar(255),
-		start_tiime varchar(255),
-		end_time varchar(255),
-		minimum_cell_offset int,
-		maximum_cell_offset int)`)
-
-	if err != nil {
-		panic(err.Error())
-	}
-
-	if err != nil {
-		log.Printf("Error %s when creating product table", err)
-		return err
-	}
-
-	log.Printf("Creating table successfully!\n")
-	return nil
-}
 
 func Insert(db *sql.DB, intent datamodel.Intent) (int, error) {
 	_, err := db.Exec(`INSERT INTO intents (name,label,day_of_the_week,start_tiime,end_time,
@@ -133,18 +110,3 @@ func IntentShow(db *sql.DB, id int) (datamodel.Intent, error) {
 	return intent, nil
 }
 
-/* func main() {
-	db, err := DBconnect()
-	if err != nil {
-		println(err)
-	}
-	defer db.Close()
-
-	createTable(db)
-
-	//Insert(db, intent)
-
-	//ShowIntent(db, 1)
-	//ListIntents(db)
-	//DeleteIntent(db, 1)
-}  */
