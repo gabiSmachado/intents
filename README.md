@@ -34,18 +34,28 @@ bin/kafka-server-start.sh config/server.properties
 ### Execute o Intent Receiver: 
 
 O serviço ficara rodando no SMO, para realizar as operações com os Intents.
+
 ![Alt text](/imgs/receiver.png)
 
 ## Trabalhando com os Intents:
+
 ### Criar Intent: 
+Na criação de um intent, deve ser informado alguns campos obrigatórios que serão solicitados pelo serviço.
+Após informá-los a mensagem que o intent foi criado e seu id devem ser retornadas.
+
 ![Alt text](/imgs/createIntent.png)
 
 ### Listar Intents: 
+É possível visualizar todos os intentes salvos até o momento com o comando:
+
 ![Alt text](/imgs/listIntent.png)
 
 ### Descrição de um Intent: 
+Para visualizar as propriedade de um Intent, informe seu ID.
+
 ![Alt text](/imgs/show.png)
 
 ### Deletar um Intent:
+É possível deletar um Intente informando seu ID.
 ![Alt text](/imgs/delete.png)
 
