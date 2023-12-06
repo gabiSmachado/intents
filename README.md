@@ -1,5 +1,5 @@
 # UMA SOLUÇÃO PARA REDES AUTO-ORGANIZADAS BASEADAS EM INTENÇÕES
-This repository contains the O-RAN Load balancing app. This application takes in intents at the SMO level and delivers policies to the RAN to self-organize the network.
+Este trabalho tem o objetivo de criar redes 5g auto-organização da rede através de Intents, desenvolvido em cima da arquitetura da rede disponível pela O-RAN Alliance em https://docs.o-ran-sc.org/en/latest/architecture/architecture.html.
 
 ## Arquitetura
 
