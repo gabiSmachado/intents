@@ -11,5 +11,8 @@ O Intent Broker consome as mensagens e as traduz em em ações de controle que d
 ![Alt text](/arqu.png)
 
 ## Requisitos 
-Instalação do near-RT RIC: https://github.com/gabiSmachado/Near-RT-RIC_deploy
+Linguagem GO;
+Mariadb: https://www.digitalocean.com/community/tutorials/how-to-install-mariadb-on-ubuntu-20-04-pt
+Apache Kafka: https://kafka.apache.org/quickstart
 
+Instalação do near-RT RIC: https://github.com/gabiSmachado/Near-RT-RIC_deploy
