@@ -57,5 +57,12 @@ Para visualizar as propriedade de um Intent, informe seu ID.
 
 ### Deletar um Intent:
 É possível deletar um Intente informando seu ID.
+
 ![Alt text](/imgs/delete.png)
 
+### Intent broker:
+Em desenvolvimento.
+
+#### É possível visualizar todas as operações realizadas através do log mantido pelo Intent Receiver:
+
+![Alt text](/imgs/log.png)
