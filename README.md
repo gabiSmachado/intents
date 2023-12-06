@@ -20,12 +20,32 @@ Apache Kafka: https://kafka.apache.org/quickstart;
 Instalação do near-RT RIC: https://github.com/gabiSmachado/Near-RT-RIC_deploy;
 
 ## Execução
-Após a instalação de todo os requisitos, crie a tabela para salvar os intents no seu banco Mariadb:
 
-Inicialize o ambiente do kafka:
+Após a instalação de todo os requisitos, inicialize o Mariadb crie a tabela para salvar os intents:
+![Alt text](/imgs/createTable.png)
+
+
+### Inicialize o Kafka: 
+Responsável pela transferência das mensagens.
 ```
 bin/zookeeper-server-start.sh config/zookeeper.properties
 bin/kafka-server-start.sh config/server.properties
 ```
+### Execute o Intent Receiver: 
 
+O serviço ficara rodando no SMO, para realizar as operações com os Intents.
+![Alt text](/imgs/receiver.png)
+
+## Trabalhando com os Intents:
+### Criar Intent: 
+![Alt text](/imgs/createIntent.png)
+
+### Listar Intents: 
+![Alt text](/imgs/listIntent.png)
+
+### Descrição de um Intent: 
+![Alt text](/imgs/show.png)
+
+### Deletar um Intent:
+![Alt text](/imgs/delete.png)
 
