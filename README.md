@@ -1,5 +1,6 @@
 # UMA SOLUÇÃO PARA REDES AUTO-ORGANIZADAS BASEADAS EM INTENÇÕES
-Este trabalho tem o objetivo de criar redes 5g auto-organização da rede através de Intents, 
+
+Este trabalho tem o objetivo de criar redes 5g auto-organização da rede através de Intents,
 desenvolvido em cima da arquitetura da rede disponível pela O-RAN Alliance em https://docs.o-ran-sc.org/en/latest/architecture/architecture.html.
 
 ## Arquitetura
@@ -10,9 +11,10 @@ O Intent Receiver executa as operações de criação, listagem e visualização
 
 O Intent Broker consome as mensagens e as traduz em em ações de controle que devem ser tomadas pelo near-RT RIC, publicando-as na interface A1 como políticas, que serão distribuídas para as xApps do near-RT RIC através do A1 Mediator.
 
-![Alt text](/arqu.png)
+![Alt text](/imgs/arqu.png)
 
-## Requisitos 
+## Requisitos
+
 Linguagem GO;
 
 Mariadb: https://www.digitalocean.com/community/tutorials/how-to-install-mariadb-on-ubuntu-20-04-pt;
@@ -27,14 +29,16 @@ Após a instalação de todo os requisitos, inicialize o Mariadb crie a tabela p
 
 ![Alt text](/imgs/createTable.png)
 
+### Inicialize o Kafka:
 
-### Inicialize o Kafka: 
 Responsável pela transferência das mensagens.
+
 ```
 bin/zookeeper-server-start.sh config/zookeeper.properties
 bin/kafka-server-start.sh config/server.properties
 ```
-### Execute o Intent Receiver: 
+
+### Execute o Intent Receiver:
 
 O serviço ficara rodando no SMO, para realizar as operações com os Intents.
 
@@ -42,28 +46,33 @@ O serviço ficara rodando no SMO, para realizar as operações com os Intents.
 
 ## Trabalhando com os Intents:
 
-### Criar Intent: 
+### Criar Intent:
+
 Na criação de um intent, deve ser informado alguns campos obrigatórios que serão solicitados pelo serviço.
 Após informá-los a mensagem que o intent foi criado e seu id devem ser retornadas.
 
 ![Alt text](/imgs/createIntent.png)
 
-### Listar Intents: 
+### Listar Intents:
+
 É possível visualizar todos os intentes salvos até o momento com o comando:
 
 ![Alt text](/imgs/listIntent.png)
 
-### Descrição de um Intent: 
+### Descrição de um Intent:
+
 Para visualizar as propriedade de um Intent, informe seu ID.
 
 ![Alt text](/imgs/show.png)
 
 ### Deletar um Intent:
+
 É possível deletar um Intente informando seu ID.
 
 ![Alt text](/imgs/delete.png)
 
 ### Intent broker:
+
 Em desenvolvimento.
 
 #### É possível visualizar todas as operações realizadas através do log mantido pelo Intent Receiver:

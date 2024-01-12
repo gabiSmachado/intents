@@ -38,7 +38,7 @@ func CreateIntent(args []string) error {
 	fmt.Println("Service Id")
 	fmt.Scanln(&serviceID)
 
-	fmt.Println("Minimum Cell Offset:")
+	fmt.Println("Policy Type Id:")
 	fmt.Scanln(&policyTypeId)
 
  	intent = datamodel.Intent{
