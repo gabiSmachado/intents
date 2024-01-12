@@ -7,8 +7,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/gabiSmachado/lbapp/datamodel"
+	"github.com/gabiSmachado/intents/datamodel"
 )
+
 
 type Client struct {
 	Uri string

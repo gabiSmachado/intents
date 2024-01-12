@@ -1,17 +1,18 @@
 package producer
 
 import (
-    "context"
-    "log"
-    "github.com/segmentio/kafka-go"
-	"github.com/gabiSmachado/lbapp/datamodel"
+	"context"
 	"encoding/json"
+	"log"
+
+	"github.com/gabiSmachado/intents/datamodel"
+	"github.com/segmentio/kafka-go"
 )
 
 func WriteMsg(intent datamodel.Intent) error {
     writer := kafka.NewWriter(kafka.WriterConfig{
-        Brokers:  []string{"localhost:9092"},
-        Topic:    "test",
+        Brokers:  []string{"localhost:29092"},
+        Topic:    "intents",
         Balancer: &kafka.LeastBytes{},
     })
 	

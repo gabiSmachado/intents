@@ -1,3 +1,3 @@
-module github.com/gabiSmachado/lbapp/database
+module github.com/gabiSmachado/intents/database
 
 go 1.19

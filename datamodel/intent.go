@@ -5,12 +5,17 @@ import "encoding/json"
 type Intent struct {
 	Name                   string    `json:"name,omitempty"`
 	Idx                    int       `json:"idx,omitempty"`
-	MaximumLoadAverage     int       `json:"maximum_load_average,omitempty"`
-	MinimumThroughput      int       `json:"minimum_throughput,omitempty"`
-	MaximumUEPerCell       int       `json:"maximum_ue_per_cell,omitempty"`
-	MaximumAssociationRate int       `json:"maximum_association_rate,omitempty"`
-	Condition              Condition `json:"condition,omitempty"`
-	Objective              Objective `json:"objective,omitempty"`
+	Description            string       `json:"description,omitempty"`
+	RicID         string `json:"ric_id"`
+	PolicyId  	  int    `json:"policy_id"`
+	ServiceID     string `json:"service_id"`
+	PolicyTypeId  int    `json:"policytype_id"`
+	//MaximumLoadAverage     int       `json:"maximum_load_average,omitempty"`
+	//MinimumThroughput      int       `json:"minimum_throughput,omitempty"`
+	//MaximumUEPerCell       int       `json:"maximum_ue_per_cell,omitempty"`
+	//MaximumAssociationRate int       `json:"maximum_association_rate,omitempty"`
+	//Condition              Condition `json:"condition,omitempty"`
+	//Objective              Objective `json:"objective,omitempty"`
 }
 
 type Condition struct {

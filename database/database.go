@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/gabiSmachado/lbapp/datamodel"
+	"github.com/gabiSmachado/intents/datamodel"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -20,10 +20,8 @@ func CurrentId(db *sql.DB) (int, error) {
 
 
 func Insert(db *sql.DB, intent datamodel.Intent) (int, error) {
-	_, err := db.Exec(`INSERT INTO intents (name,label,day_of_the_week,start_tiime,end_time,
-		minimum_cell_offset,maximum_cell_offset) VALUES (?,?,?,?,?,?,?)`, intent.Name,
-		intent.Condition.Labels, intent.Condition.When.DayOfWeek, intent.Condition.When.TimeSpan.StartTime,
-		intent.Condition.When.TimeSpan.EndTime, intent.Objective.MinimumCellOffset, intent.Objective.MaximumCellOffset)
+	_, err := db.Exec(`INSERT INTO intents (name,description,ric_id,policy_id,service_id,policy_type_id) VALUES (?,?,?,?,?,?)`, 
+			intent.Name, intent.Description, intent.RicID, intent.PolicyId,intent.ServiceID,intent.PolicyTypeId)
 	if err != nil {
 		log.Printf("Error %s when inserting in table", err)
 		return 0, err
@@ -65,7 +63,8 @@ func DeleteIntent(db *sql.DB, id int) error {
 }
 
 func DBconnect() (*sql.DB, error) {
-	db, err := sql.Open("mysql", "root:1234@tcp(localhost:3306)/intents")
+	log.Printf("teste")
+	db, err := sql.Open("mysql", "root:1234@tcp(localhost:3306)/intent")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -81,32 +80,22 @@ func DBconnect() (*sql.DB, error) {
 }
 
 func IntentShow(db *sql.DB, id int) (datamodel.Intent, error) {
-	var name, day, start, end, label string
-	var min, max int
+	var name, ricId, serviceID, description string
+var policyId, policyTypeId int
 	err := db.QueryRow("SELECT * FROM intents WHERE id = ?", id).Scan(&id, &name,
-		&label, &day, &start, &end, &min, &max)
+		&description,&ricId,&policyId,&serviceID,&policyTypeId)
 	intent := datamodel.Intent{
-		Idx:  id,
 		Name: name,
-		Condition: datamodel.Condition{
-			When: datamodel.When{
-				DayOfWeek: day,
-				TimeSpan: datamodel.TimeSpan{
-					StartTime: start,
-					EndTime:   end,
-				},
-			},
-			Labels: label,
-		},
-		Objective: datamodel.Objective{
-			MinimumCellOffset: min,
-			MaximumCellOffset: max,
-		}}
-
+		Description: description,
+		RicID: ricId,
+		PolicyId: policyId,
+		ServiceID: serviceID,
+		PolicyTypeId: policyTypeId,
+	} 
+		
 	if err != nil {
 		log.Printf("Error %s when selecting intent", err)
 		return intent, err
 	}
 	return intent, nil
 }
-

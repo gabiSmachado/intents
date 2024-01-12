@@ -1,4 +1,4 @@
-module github.com/gabiSmachado/lbapp/producer
+module github.com/gabiSmachado/intents/producer
 
 go 1.19
 

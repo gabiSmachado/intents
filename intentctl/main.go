@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/gabiSmachado/lbapp/client"
-	"github.com/gabiSmachado/lbapp/datamodel"
+	"github.com/gabiSmachado/intents/client"
+	"github.com/gabiSmachado/intents/datamodel"
 	//"golang.org/x/exp/slog"
 )
 
 var (
-	_flagURI   = flag.String("uri", "localhost:8000", "server uri")
+	_flagURI   = flag.String("uri", "localhost:8585", "server uri")
 	_flagDebug = flag.Bool("debug", false, "enable debugging log")
 	_client    client.Client
 )
@@ -19,47 +19,36 @@ var (
 func CreateIntent(args []string) error {
 	//createIntentCmd := flag.NewFlagSet("create", flag.PanicOnError)
 	//flagEvent := createIntentCmd.String("event", "undefined", "mnemonic for the intent")
-	var name, day, start, end, label string
-	var min, max int
+	var name, ricId, serviceID, description string
+	var policyId, policyTypeId int
 	var intent datamodel.Intent
 
 	fmt.Println("Name:")
 	fmt.Scanln(&name)
 
-	fmt.Println("Label:")
-	fmt.Scanln(&label)
+	fmt.Println("Description:")
+	fmt.Scanln(&description)
 
-	fmt.Println("Day of the Week:")
-	fmt.Scanln(&day)
+	fmt.Println("RIC Id:")
+	fmt.Scanln(&ricId)
 
-	fmt.Println("Start Time:")
-	fmt.Scanln(&start)
+	fmt.Println("Policy Id:")
+	fmt.Scanln(&policyId)
 
-	fmt.Println("End Time:")
-	fmt.Scanln(&end)
+	fmt.Println("Service Id")
+	fmt.Scanln(&serviceID)
 
 	fmt.Println("Minimum Cell Offset:")
-	fmt.Scanln(&min)
+	fmt.Scanln(&policyTypeId)
 
-	fmt.Println("Maximum Cell Offset:")
-	fmt.Scanln(&max)
-
-	intent = datamodel.Intent{
+ 	intent = datamodel.Intent{
 		Name: name,
-		Condition: datamodel.Condition{
-			When: datamodel.When{
-				DayOfWeek: day,
-				TimeSpan: datamodel.TimeSpan{
-					StartTime: start,
-					EndTime:   end,
-				},
-			},
-			Labels: label,
-		},
-		Objective: datamodel.Objective{
-			MinimumCellOffset: min,
-			MaximumCellOffset: max,
-		}}
+		Description: description,
+		RicID: ricId,
+		PolicyId: policyId,
+		ServiceID: serviceID,
+		PolicyTypeId: policyTypeId,
+	} 
 
 	intentID, err := _client.IntentCreate(intent)
 	if err != nil {

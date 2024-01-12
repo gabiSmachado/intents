@@ -1,3 +1,3 @@
-module github.com/gabiSmachado/lbapp/datamodel
+module github.com/gabiSmachado/intents/datamodel
 
 go 1.19

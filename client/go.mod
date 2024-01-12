@@ -1,4 +1,4 @@
-module github.com/gabiSmachado/lbapp/client
+module github.com/gabiSmachado/intents/client
 
 go 1.19
 

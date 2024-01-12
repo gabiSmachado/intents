@@ -1,4 +1,4 @@
-module github.com/gabiSmachado/lbapp/intentctl
+module github.com/gabiSmachado/intents/intentctl
 
 go 1.19
 

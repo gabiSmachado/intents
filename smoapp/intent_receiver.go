@@ -6,23 +6,23 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/gabiSmachado/lbapp/database"
-	"github.com/gabiSmachado/lbapp/datamodel"
-	"github.com/gabiSmachado/lbapp/producer"
+	"github.com/gabiSmachado/intents/database"
+	"github.com/gabiSmachado/intents/datamodel"
+	"github.com/gabiSmachado/intents/producer"
 	"github.com/gorilla/mux"
 )
 
 func main() {
-	r := mux.NewRouter()
+  r := mux.NewRouter()
 	r.HandleFunc("/intent", IntentCreate).Methods("POST")
-	r.HandleFunc("/intents", IntentList).Methods("GET")
+	r.HandleFunc("/intent", IntentList).Methods("GET")
 	r.HandleFunc("/intent/{idx}", IntentShow).Methods("GET")
 	r.HandleFunc("/intent/{idx}", IntentDelete).Methods("DELETE")
-	srv := &http.Server{
-		Addr:    ":8000",
+ 	 srv := &http.Server{
+		Addr:    ":8585",
 		Handler: r,
-	}
-	srv.ListenAndServe()
+	 } 
+	srv.ListenAndServe()	
 }
 
 func IntentList(w http.ResponseWriter, r *http.Request) {
