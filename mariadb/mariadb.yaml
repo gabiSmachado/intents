@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: banco-mariadb-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: banco-mariadb
+  template:
+    metadata:
+      labels:
+        app: banco-mariadb
+    spec:
+      containers:
+      - name: banco-mariadb
+        image: mariadb
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_USER
+          value: intent
+        - name: MYSQL_ROOT_PASSWORD
+          value: intent
+        - name: MYSQL_DATABASE
+          value: intent
+        volumeMounts:
+        - name: setup-script
+          mountPath: /docker-entrypoint-initdb.d/setup.sql
+      volumes:
+      - name: setup-script
+        hostPath:
+          path: setup.sql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: banco-mariadb-service
+spec:
+  selector:
+    app: banco-mariadb
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
