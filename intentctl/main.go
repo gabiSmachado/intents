@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	_flagURI   = flag.String("uri", "localhost:8585", "server uri")
+	_flagURI   = flag.String("uri", "smoapp-service.smo.svc.cluster.local:8585", "server uri")
 	_flagDebug = flag.Bool("debug", false, "enable debugging log")
 	_client    client.Client
 )
