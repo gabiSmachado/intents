@@ -11,8 +11,8 @@ import (
 
 func WriteMsg(intent datamodel.Intent) error {
     writer := kafka.NewWriter(kafka.WriterConfig{
-        Brokers:  []string{"localhost:29092"},
-        Topic:    "intents",
+        Brokers:  []string{"kafka-teste.smo.svc.cluster.local"},
+        Topic:    "intent",
         Balancer: &kafka.LeastBytes{},
     })
 	
@@ -21,11 +21,11 @@ func WriteMsg(intent datamodel.Intent) error {
 		log.Fatalf("failed to marshal intent (%s)\n", err)
         return err
 	}
-
 	message := kafka.Message{
 		Value:     marshal,}
 
     err = writer.WriteMessages(context.Background(), message)
+    
     if err != nil {
         log.Fatalf("Error writing message: (%s)\n", err)
         return err

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smoapp-deployment
+  namespace: smo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: smoapp
+  template:
+    metadata:
+      labels:
+        app: smoapp
+    spec:
+      containers:
+      - name: smoapp
+        image: gabiminz/intents:3
+        ports:
+        - containerPort: 8585
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: smoapp-service
+spec:
+  selector:
+    app: smoapp
+  ports:
+    - protocol: TCP
+      port: 8585
+      targetPort: 8585

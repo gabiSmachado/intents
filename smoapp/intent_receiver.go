@@ -18,11 +18,14 @@ func main() {
 	r.HandleFunc("/intent", IntentList).Methods("GET")
 	r.HandleFunc("/intent/{idx}", IntentShow).Methods("GET")
 	r.HandleFunc("/intent/{idx}", IntentDelete).Methods("DELETE")
- 	 srv := &http.Server{
+/*  	 srv := &http.Server{
 		Addr:    ":8585",
 		Handler: r,
 	 } 
-	srv.ListenAndServe()	
+
+	srv.ListenAndServe()	 */
+	http.ListenAndServe(":8585",r)
+
 }
 
 func IntentList(w http.ResponseWriter, r *http.Request) {

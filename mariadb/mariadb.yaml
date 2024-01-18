@@ -1,44 +1,53 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: banco-mariadb-deployment
-spec:
+  name: mariadb-deployment
+  namespace: smo
+spec: 
   replicas: 1
   selector:
     matchLabels:
-      app: banco-mariadb
-  template:
+      app: mariadb
+  template: # blueprint for pods
     metadata:
       labels:
-        app: banco-mariadb
-    spec:
+        app: mariadb
+    spec:     
       containers:
-      - name: banco-mariadb
+      - name: mariadb
         image: mariadb
         ports:
-        - containerPort: 3306
+          - containerPort: 3306 #default one
         env:
-        - name: MYSQL_USER
-          value: intent
-        - name: MYSQL_ROOT_PASSWORD
-          value: intent
-        - name: MYSQL_DATABASE
-          value: intent
+          - name: MARIADB_ROOT_PASSWORD
+            value: teste
         volumeMounts:
-        - name: setup-script
-          mountPath: /docker-entrypoint-initdb.d/setup.sql
+          - name: mysql-initdb
+            mountPath: /docker-entrypoint-initdb.d
       volumes:
-      - name: setup-script
-        hostPath:
-          path: setup.sql
+        - name: mysql-initdb
+          configMap:
+            name: mysql-initdb-config
+    
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-initdb-config
+data:
+  init.sql: |
+    CREATE DATABASE IF NOT EXISTS intent;
+    USE intent;
+    CREATE TABLE IF NOT EXISTS intent.intents (id int primary key AUTO_INCREMENT,name varchar(255),description varchar(255),ric_id varchar(255),policy_id int,service_id varchar(255),policy_type_id int);
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: banco-mariadb-service
+  name: mariadb-service
 spec:
   selector:
-    app: banco-mariadb
+    app: mariadb
   ports:
     - protocol: TCP
       port: 3306

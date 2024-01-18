@@ -63,8 +63,7 @@ func DeleteIntent(db *sql.DB, id int) error {
 }
 
 func DBconnect() (*sql.DB, error) {
-	log.Printf("teste")
-	db, err := sql.Open("mysql", "root:1234@tcp(localhost:3306)/intent")
+	db, err := sql.Open("mysql", "root:teste@tcp(mariadb-service.smo.svc.cluster.local)/intent")
 	if err != nil {
 		panic(err.Error())
 	}

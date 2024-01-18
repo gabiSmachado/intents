@@ -15,9 +15,9 @@ import (
 )
 
 const (
-	DefaultHostPMS         = "http://nonrtricgateway.nonrtric.svc.cluster.local:9090"
+	DefaultHostPMS         = "nonrtricgateway.nonrtric.svc.cluster.local"
 	BasePathPMS            = "/a1-policy/v2"
-	DefaultHostRAppCatalog = "http://rappcatalogueservice.nonrtric.svc.cluster.local:9085"
+	DefaultHostRAppCatalog = "rappcatalogueservice.nonrtric.svc.cluster.local"
 	BasePathRAppCatalog    = "/services"
 )
 
@@ -66,8 +66,8 @@ func registerServiceRAppCatalogue(intent datamodel.Intent){
 
 func main() {
 	reader := kafka.NewReader(kafka.ReaderConfig{
-		Brokers:  []string{"localhost:9092"},
-		Topic:    "test",
+		Brokers:  []string{"kafka-service.smo.svc.cluster.local"},
+		Topic:    "intent",
 		GroupID:  "mygroup",
 		MinBytes: 10e3, // 10KB
 		MaxBytes: 10e6, // 10MB

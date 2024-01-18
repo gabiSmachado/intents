@@ -106,17 +106,17 @@ func (client *Client) IntentShow(idx int) (*datamodel.Intent, error) {
 }
 
 func (client *Client) IntentList() ([]datamodel.Intent, error) {
-	res, err := http.Get(fmt.Sprintf("http://%s/intents", client.Uri))
+	res, err := http.Get(fmt.Sprintf("http://%s/intent", client.Uri))
 	if err != nil {
-		fmt.Errorf("unable to obtain intent list (%s)", err)
+		fmt.Printf("unable to obtain intent list (%s)", err)
 		return nil, err
 	}
-
 	var intents []datamodel.Intent = make([]datamodel.Intent, 256)
 
 	err = json.NewDecoder(res.Body).Decode(&intents)
+
 	if err != nil {
-		fmt.Errorf("failed to parse the received response (%s)", err)
+		fmt.Printf("failed to parse the received response (%s)", err)
 		return nil, err
 	}
 
