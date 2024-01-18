@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: smoapp
-        image: gabiminz/intents:latest
+        image: gabiminz/intents:3
         ports:
         - containerPort: 8585
 

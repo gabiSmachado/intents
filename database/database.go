@@ -49,7 +49,7 @@ func ListIntents(db *sql.DB) ([]datamodel.Intent, error) {
 		intents = append(intents, intent)
 	}
 	if err = rows.Err(); err != nil {
-		//log.Printf("Error %s when listing intents", err)
+		log.Printf("Error %s when listing intents", err)
 		return nil, err
 	}
 
