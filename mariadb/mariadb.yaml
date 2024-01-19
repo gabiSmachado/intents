@@ -20,7 +20,7 @@ spec:
           - containerPort: 3306 #default one
         env:
           - name: MARIADB_ROOT_PASSWORD
-            value: teste
+            value: mudemeja
         volumeMounts:
           - name: mysql-initdb
             mountPath: /docker-entrypoint-initdb.d

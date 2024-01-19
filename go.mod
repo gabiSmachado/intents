@@ -13,4 +13,5 @@ require (
 require (
 	github.com/go-sql-driver/mysql v1.7.1
 	github.com/segmentio/kafka-go v0.4.45
+	golang.org/x/exp v0.0.0-20240112132812-db7319d0e0e3
 )

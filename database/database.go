@@ -3,10 +3,8 @@ package database
 import (
 	"database/sql"
 	"fmt"
-	"log"
 
 	"github.com/gabiSmachado/intents/datamodel"
-	_ "github.com/go-sql-driver/mysql"
 )
 
 func CurrentId(db *sql.DB) (int, error) {
@@ -23,7 +21,7 @@ func Insert(db *sql.DB, intent datamodel.Intent) (int, error) {
 	_, err := db.Exec(`INSERT INTO intents (name,description,ric_id,policy_id,service_id,policy_type_id) VALUES (?,?,?,?,?,?)`, 
 			intent.Name, intent.Description, intent.RicID, intent.PolicyId,intent.ServiceID,intent.PolicyTypeId)
 	if err != nil {
-		log.Printf("Error %s when inserting in table", err)
+		fmt.Printf("Error %s when inserting in table", err)
 		return 0, err
 	}
 	id, _ := CurrentId(db)
@@ -33,7 +31,7 @@ func Insert(db *sql.DB, intent datamodel.Intent) (int, error) {
 func ListIntents(db *sql.DB) ([]datamodel.Intent, error) {
 	rows, err := db.Query("SELECT id,name FROM intents")
 	if err != nil {
-		log.Printf("Error %s when listing intents", err)
+		fmt.Printf("Error %s when listing intents", err)
 		return nil, err
 	}
 	defer rows.Close()
@@ -43,13 +41,13 @@ func ListIntents(db *sql.DB) ([]datamodel.Intent, error) {
 	var id int
 	for rows.Next() {
 		if err := rows.Scan(&id, &name); err != nil {
-			log.Printf("Error %s when listing intents", err)
+			fmt.Printf("Error %s when listing intents", err)
 		}
 		intent := datamodel.Intent{Idx: id, Name: name}
 		intents = append(intents, intent)
 	}
 	if err = rows.Err(); err != nil {
-		log.Printf("Error %s when listing intents", err)
+		fmt.Printf("Error %s when listing intents", err)
 		return nil, err
 	}
 
@@ -63,7 +61,7 @@ func DeleteIntent(db *sql.DB, id int) error {
 }
 
 func DBconnect() (*sql.DB, error) {
-	db, err := sql.Open("mysql", "root:teste@tcp(mariadb-service.smo.svc.cluster.local)/intent")
+	db, err := sql.Open("mysql", "root:mudemeja@tcp(mariadb-service.smo.svc.cluster.local)/intent")
 
 	if err != nil {
 		fmt.Println("Connection error")
@@ -71,11 +69,10 @@ func DBconnect() (*sql.DB, error) {
 	}
 
 	if err := db.Ping(); err != nil {
-		fmt.Println("Connection db ping")
-		log.Fatalln(err)
+		fmt.Println("Connection to database error")
 		return nil, err
 	} else {
-		fmt.Println("Connection successful!")
+		fmt.Println("Connection to database successful!")
 		return db, nil
 	}
 
@@ -96,7 +93,7 @@ var policyId, policyTypeId int
 	} 
 		
 	if err != nil {
-		log.Printf("Error %s when selecting intent", err)
+		fmt.Printf("Error %s when selecting intent", err)
 		return intent, err
 	}
 	return intent, nil

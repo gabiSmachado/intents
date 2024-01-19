@@ -15,9 +15,11 @@ spec:
     spec:
       containers:
       - name: smoapp
-        image: gabiminz/intents:3
+        image: gabiminz/intents:latest
+        imagePullPolicy: Always
         ports:
-        - containerPort: 8585
+        - name: smoapp-http
+          containerPort: 8585
 
 ---
 apiVersion: v1
@@ -28,6 +30,5 @@ spec:
   selector:
     app: smoapp
   ports:
-    - protocol: TCP
-      port: 8585
-      targetPort: 8585
+    - port: 8585
+      targetPort: smoapp-http

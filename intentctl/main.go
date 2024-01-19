@@ -60,14 +60,13 @@ func CreateIntent(args []string) error {
 
 func ListIntents() error {
 	intents, err := _client.IntentList()
-
+	fmt.Printf("/n erro: ", err)
 	if err == nil {
 		for _, intent := range intents {
 			fmt.Printf("ID  NAME\n")
 			fmt.Printf("%d   %s\n", intent.Idx, intent.Name)
 		}
 	}
-
 	return err
 }
 
