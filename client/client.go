@@ -17,11 +17,12 @@ type Client struct {
 }
 
 func SendCommand(req *http.Request) (*http.Response, error) {
-	req.Header.Set("Content-Type", "application/json")
-	client := http.Client{Timeout: 10 * time.Second}
 	fmt.Println("send command")
+	req.Header.Set("Content-Type", "application/json")
+	fmt.Println("header")
+	client := http.Client{Timeout: 10 * time.Second}
+	fmt.Println("cliente")
 	return client.Do(req)
-	
 }
 
 func (client *Client) IntentCreate(intent datamodel.Intent) (int, error) {
@@ -51,7 +52,7 @@ func (client *Client) IntentCreate(intent datamodel.Intent) (int, error) {
 		return -1, err
 	}
 	defer res.Body.Close()
-	
+
 	switch res.StatusCode {
 	case 200:
 		var response datamodel.IntentResponse
