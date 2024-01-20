@@ -23,7 +23,7 @@ func main() {
 		Addr:    ":8585",
 		Handler: r,
 	 }
-
+	 fmt.Println("Starting")
 	srv.ListenAndServe()
 }
 
@@ -41,7 +41,7 @@ func IntentCreate(w http.ResponseWriter, r *http.Request){
 	db, _ := database.DBconnect()
 	defer db.Close()
 	defer r.Body.Close()
-
+	fmt.Println("Starting creation")
 	var req datamodel.IntentRequest
 
 	err := json.NewDecoder(r.Body).Decode(&req)

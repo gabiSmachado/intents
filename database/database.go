@@ -8,9 +8,11 @@ import (
 )
 
 func CurrentId(db *sql.DB) (int, error) {
+	fmt.Println("GETTING IDs")
 	var id int
 	err := db.QueryRow("SELECT MAX(id) FROM intents").Scan(&id)
 	if err != nil {
+		fmt.Printf("ERRO GETTING IDs",err)
 		return 0, err
 	}
 	return id, nil
@@ -18,8 +20,10 @@ func CurrentId(db *sql.DB) (int, error) {
 
 
 func Insert(db *sql.DB, intent datamodel.Intent) (int, error) {
+	fmt.Println("INSERT DB")
 	_, err := db.Exec(`INSERT INTO intents (name,description,ric_id,policy_id,service_id,policy_type_id) VALUES (?,?,?,?,?,?)`, 
 			intent.Name, intent.Description, intent.RicID, intent.PolicyId,intent.ServiceID,intent.PolicyTypeId)
+	fmt.Println("INSERT DB ending")
 	if err != nil {
 		fmt.Printf("Error %s when inserting in table", err)
 		return 0, err
@@ -62,7 +66,7 @@ func DeleteIntent(db *sql.DB, id int) error {
 
 func DBconnect() (*sql.DB, error) {
 	db, err := sql.Open("mysql", "root:mudemeja@tcp(mariadb-service.smo.svc.cluster.local)/intent")
-
+	fmt.Println("Starting DB")
 	if err != nil {
 		fmt.Println("Connection error")
 		//panic(err.Error())

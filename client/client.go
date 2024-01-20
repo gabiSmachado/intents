@@ -19,6 +19,7 @@ type Client struct {
 func SendCommand(req *http.Request) (*http.Response, error) {
 	req.Header.Set("Content-Type", "application/json")
 	client := http.Client{Timeout: 10 * time.Second}
+	fmt.Println("send command")
 	return client.Do(req)
 	
 }
@@ -38,6 +39,7 @@ func (client *Client) IntentCreate(intent datamodel.Intent) (int, error) {
 	req, err := http.NewRequest("POST",
 		fmt.Sprintf("http://%s/intent", client.Uri),
 		bytes.NewReader(marshal))
+		fmt.Println("http creating")
 	if err != nil {
 		fmt.Printf("failed to create request (%s)", err)
 		return -1, err
@@ -49,6 +51,7 @@ func (client *Client) IntentCreate(intent datamodel.Intent) (int, error) {
 		return -1, err
 	}
 	defer res.Body.Close()
+	
 	switch res.StatusCode {
 	case 200:
 		var response datamodel.IntentResponse
