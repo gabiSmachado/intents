@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	_flagURI   = flag.String("uri", "smoapp-service.smo.svc.cluster.local:8585", "server uri")
+	_flagURI   = flag.String("uri", "localhost:9090", "server uri")
 	_flagDebug = flag.Bool("debug", false, "enable debugging log")
 	_client    client.Client
 )
@@ -60,7 +60,6 @@ func CreateIntent(args []string) error {
 
 func ListIntents() error {
 	intents, err := _client.IntentList()
-	fmt.Printf("/n erro: ", err)
 	if err == nil {
 		for _, intent := range intents {
 			fmt.Printf("ID  NAME\n")

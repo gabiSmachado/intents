@@ -10,9 +10,8 @@ COPY /smoapp/intent_receiver.go ./
 
 RUN go get github.com/gabiSmachado/intents/database
 RUN go get github.com/gabiSmachado/intents/datamodel
-RUN go get github.com/gabiSmachado/intents/producer
 RUN go build -o /smoapp
 
-EXPOSE 8585
+EXPOSE 9090
 
 CMD [ "/smoapp"]
