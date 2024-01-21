@@ -7,8 +7,8 @@ COPY go.sum ./
 
 COPY . ./
 
-RUN go build -o /intent_broker
+RUN go build -o /smoapp
 
-EXPOSE 9595
+EXPOSE 3000
 
-CMD [ "/intent_broker"]
+CMD [ "/smoapp"]

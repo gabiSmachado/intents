@@ -9,7 +9,7 @@ import (
 	"github.com/gabiSmachado/intents/database"
 	"github.com/gabiSmachado/intents/datamodel"
 
-	//"github.com/gabiSmachado/intents/producer"
+	"github.com/gabiSmachado/intents/producer"
 	"github.com/gorilla/mux"
 )
 
@@ -21,24 +21,22 @@ func main() {
 	r.HandleFunc("/intent/{idx}", IntentDelete).Methods("DELETE")
 
 	 srv := &http.Server{
-		Addr:    ":9090",
+		Addr:    ":3000",
 		Handler: r,
 	 }
-	 fmt.Println("Starting")
+
 	srv.ListenAndServe()
 }
 
 func IntentList(w http.ResponseWriter, r *http.Request) {
-	fmt.Print("listar int/n")
 	db, err := database.DBconnect()
 
 	if err != nil {
 		fmt.Printf("error to connect to database",err)
 	}
 	
-	fmt.Print("listar int - conect db")
 	intents, err := database.ListIntents(db)
-	fmt.Print("listar int - db retur")
+
 	if err != nil {
 		fmt.Println("failed to get the intent list")
 	}
@@ -50,7 +48,6 @@ func IntentCreate(w http.ResponseWriter, r *http.Request){
 	db, _ := database.DBconnect()
 	defer db.Close()
 	defer r.Body.Close()
-	fmt.Println("Starting creation")
 	var req datamodel.IntentRequest
 
 	err := json.NewDecoder(r.Body).Decode(&req)
@@ -69,7 +66,7 @@ func IntentCreate(w http.ResponseWriter, r *http.Request){
 	}
 	json.NewEncoder(w).Encode(resp)
 
-	//producer.WriteMsg(req.Intent)
+	producer.WriteMsg(req.Intent)
 }
 
 func IntentShow(w http.ResponseWriter, r *http.Request) {

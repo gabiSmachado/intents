@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/gabiSmachado/intents/datamodel"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func CurrentId(db *sql.DB) (int, error) {
@@ -65,9 +66,8 @@ func DeleteIntent(db *sql.DB, id int) error {
 }
 
 func DBconnect() (*sql.DB, error) {
-	fmt.Println("/nDB/n")
 	db, err := sql.Open("mysql", "root:intent@tcp(mariadb-service.smo.svc.cluster.local)/intent")
-	fmt.Println("Starting DB")
+
 	if err != nil {
 		fmt.Println("Connection error")
 		return nil, err
