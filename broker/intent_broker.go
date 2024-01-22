@@ -25,19 +25,46 @@ type PolicyData struct {
 	Threshold int   `json:"threshold"`
 }
 
-const (
-	DefaultHostPMS         = "http://nonrtricgateway.nonrtric.svc.cluster.local:9090"
-	BasePathPMS            = "/a1-policy/v2"
-	DefaultHostRAppCatalog = "http://rappcatalogueservice.nonrtric.svc.cluster.local:9085"
-	BasePathRAppCatalog    = "/services"
-)
+type rApp struct {
+	Version       string `json:"version"`
+	DisplayName         string `json:"display_name"`
+	Description 	string    `json:"description"`
+}
 
-var (
-	baseURLRAppCatalogue  = DefaultHostRAppCatalog + BasePathRAppCatalog
-	baseURLPMS            = DefaultHostPMS + BasePathPMS
-)
 
-func registerServiceRAppCatalogue(intent *datamodel.Intent){
+func registerServiceRAppCatalogue(){
+	body := rApp{
+		Version:  "0.0.1",
+		DisplayName: "Hello Word rApp",
+		Description: "Hello Word rApp for testing Non-RT RIC guide development of future rApps and demo purposes",
+	}
+
+	marshal, err := json.Marshal(body)
+	if err != nil {
+		fmt.Printf("failed to marshal rapp body (%s)", err)
+	}
+
+	req, err := http.NewRequest("PUT",
+	"http://rappcatalogueservice.nonrtric.svc.cluster.local:9085/services/IntentBrokerApp",
+		 bytes.NewBuffer(marshal))
+
+    if err != nil {
+        fmt.Printf("failed to create rApp request (%s)", err)
+    }
+    req.Header.Set("Content-Type", "application/json")
+
+	client := http.Client{Timeout: 10 * time.Second}
+    resp, err := client.Do(req)
+    if err != nil {
+		fmt.Printf("failed to register rApp(%s)", err)
+    }else{
+		fmt.Print("rApp registered" )
+	}
+    defer resp.Body.Close()
+}
+
+
+func PutPolicy(intent *datamodel.Intent){
 	threshold := rand.Intn(10^15 - 1)
 	typeid := strconv.Itoa(intent.PolicyTypeId)
 
@@ -51,18 +78,17 @@ func registerServiceRAppCatalogue(intent *datamodel.Intent){
 		typeid,
 	}
 
-	url :=	baseURLPMS + "/policies"
-
 	marshal, err := json.Marshal(policy)
 	if err != nil {
 		fmt.Printf("failed to marshal policy (%s)", err)
 	}
 
-    req, err := http.NewRequest(http.MethodPut, url, bytes.NewBuffer(marshal))
+    req, err := http.NewRequest("PUT",
+		"http://nonrtricgateway.nonrtric.svc.cluster.local:9090/a1-policy/v2/policies",
+		 bytes.NewBuffer(marshal))
     if err != nil {
         fmt.Printf("failed to create request (%s)", err)
     }
-
     req.Header.Set("Content-Type", "application/json")
 
 	client := http.Client{Timeout: 10 * time.Second}
@@ -78,6 +104,8 @@ func registerServiceRAppCatalogue(intent *datamodel.Intent){
 
 
 func main() {
+	registerServiceRAppCatalogue()
+
 	reader := kafka.NewReader(kafka.ReaderConfig{
 		Brokers:  []string{"kafka-teste.smo.svc.cluster.local"},
 		Topic:    "intent",
@@ -98,5 +126,5 @@ func main() {
 
 	fmt.Printf("Processed message: %v\n",msg) 
 
-	registerServiceRAppCatalogue(msg)
+	PutPolicy(msg)
 }

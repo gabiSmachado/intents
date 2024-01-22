@@ -9,6 +9,6 @@ COPY . ./
 
 RUN go build -o /intent_broker
 
-EXPOSE 9595
+EXPOSE 9555
 
 CMD [ "/intent_broker"]
