@@ -13,28 +13,28 @@ import (
 	"github.com/gabiSmachado/intents/datamodel"
 	"github.com/segmentio/kafka-go"
 )
+
 type PutBody struct {
-	RicID         string `json:"ric_id"`
-	PolicyId  	  int    `json:"policy_id"`
-	ServiceID     string `json:"service_id"`
-	PolicyData	  PolicyData`json:"policy_data"`
-	PolicyTypeId  string    `json:"policytype_id"`
+	RicID        string     `json:"ric_id"`
+	PolicyId     string        `json:"policy_id"`
+	ServiceID    string     `json:"service_id"`
+	PolicyData   PolicyData `json:"policy_data"`
+	PolicyTypeId string     `json:"policytype_id"`
 }
 
 type PolicyData struct {
-	Threshold int   `json:"threshold"`
+	Threshold int `json:"threshold"`
 }
 
 type rApp struct {
-	Version       string `json:"version"`
-	DisplayName         string `json:"display_name"`
-	Description 	string    `json:"description"`
+	Version     string `json:"version"`
+	DisplayName string `json:"display_name"`
+	Description string `json:"description"`
 }
 
-
-func registerServiceRAppCatalogue(){
+func registerServiceRAppCatalogue() {
 	body := rApp{
-		Version:  "0.0.1",
+		Version:     "0.0.1",
 		DisplayName: "Hello Word rApp",
 		Description: "Hello Word rApp for testing Non-RT RIC guide development of future rApps and demo purposes",
 	}
@@ -45,37 +45,36 @@ func registerServiceRAppCatalogue(){
 	}
 
 	req, err := http.NewRequest("PUT",
-	"http://rappcatalogueservice.nonrtric.svc.cluster.local:9085/services/IntentBrokerApp",
-		 bytes.NewBuffer(marshal))
+		"http://rappcatalogueservice.nonrtric.svc.cluster.local:9085/services/IntentBrokerApp",
+		bytes.NewBuffer(marshal))
 
-    if err != nil {
-        fmt.Printf("failed to create rApp request (%s)", err)
-    }
-    req.Header.Set("Content-Type", "application/json")
+	if err != nil {
+		fmt.Printf("failed to create rApp request (%s)", err)
+	}
+	req.Header.Set("Content-Type", "application/json")
 
 	client := http.Client{Timeout: 10 * time.Second}
-    resp, err := client.Do(req)
-    if err != nil {
+	resp, err := client.Do(req)
+	if err != nil {
 		fmt.Printf("failed to register rApp(%s)", err)
-    }else{
-		fmt.Print("rApp registered" )
+	} else {
+		fmt.Print("rApp registered")
 	}
-    defer resp.Body.Close()
+	defer resp.Body.Close()
 }
 
+func PutPolicy(intent *datamodel.Intent) {
+	threshold := rand.Intn(10 ^ 15 - 1)
+	policyid := strconv.Itoa(intent.PolicyId)
 
-func PutPolicy(intent *datamodel.Intent){
-	threshold := rand.Intn(10^15 - 1)
-	typeid := strconv.Itoa(intent.PolicyTypeId)
-
-	policy:= PutBody{
+	policy := PutBody{
 		intent.RicID,
-		intent.PolicyId,
-		intent.ServiceID,
+		policyid,
+		"IntentrApp",
 		PolicyData{
 			threshold,
 		},
-		typeid,
+		policyid,
 	}
 
 	marshal, err := json.Marshal(policy)
@@ -83,28 +82,26 @@ func PutPolicy(intent *datamodel.Intent){
 		fmt.Printf("failed to marshal policy (%s)", err)
 	}
 
-    req, err := http.NewRequest("PUT",
-		"http://nonrtricgateway.nonrtric.svc.cluster.local:9090/a1-policy/v2/policies",
-		 bytes.NewBuffer(marshal))
-    if err != nil {
-        fmt.Printf("failed to create request (%s)", err)
-    }
-    req.Header.Set("Content-Type", "application/json")
+	req, err := http.NewRequest("PUT", 
+	"http://nonrtricgateway.nonrtric.svc.cluster.local:9090/a1-policy/v2/policies",
+	bytes.NewBuffer(marshal))
+	if err != nil {
+		fmt.Printf("failed to create request (%s)", err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+	fmt.Printf("url:", req.URL)
 
 	client := http.Client{Timeout: 10 * time.Second}
-    resp, err := client.Do(req)
-    if err != nil {
+	resp, err := client.Do(req)
+	if err != nil {
 		fmt.Printf("failed to send policy (%s)", err)
-    }else{
-		fmt.Print("policy registered" )
 	}
-    defer resp.Body.Close()
+	fmt.Printf("Return: %s", resp.Status)
+	defer resp.Body.Close()
 }
 
-
-
 func main() {
-	registerServiceRAppCatalogue()
+	//registerServiceRAppCatalogue()
 
 	reader := kafka.NewReader(kafka.ReaderConfig{
 		Brokers:  []string{"kafka-teste.smo.svc.cluster.local"},
@@ -124,7 +121,7 @@ func main() {
 		fmt.Printf("Error parsing message: %v", err)
 	}
 
-	fmt.Printf("Processed message: %v\n",msg) 
+	fmt.Printf("Processed message: %v\n", msg)
 
 	PutPolicy(msg)
 }

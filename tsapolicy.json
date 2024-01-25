@@ -1,0 +1,9 @@
+{
+  "ric_id": "ric4",
+  "policy_id": "Teste",
+  "service_id": 2,
+  "policy_data":{
+    "threshold": 12
+  },
+  "policytype_id": 2
+}
